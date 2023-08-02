@@ -1,0 +1,16 @@
+$bc-1: rgb(216, 209, 209);
+
+$text-c-back: rgb(0, 0, 0);
+$text-c-front: rgb(255, 255, 255);
+
+
+body, html {
+  background-color: $bc-1;
+  color: $text-c-back;
+  user-select: none;
+}
+
+img {
+  -webkit-user-drag: none;
+}
+

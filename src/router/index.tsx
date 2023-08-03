@@ -3,6 +3,8 @@ import React, {lazy} from 'react'
 
 const Home = lazy(() => import('@/pages/home.tsx'))
 const About = lazy(() => import('@/pages/about.tsx'))
+const Layout = lazy(() => import('@/components/Layout/index.tsx'))
+const Login = lazy(() => import('@/pages/login/login.tsx'))
 
 const withLoadingComponent = (comp: JSX.Element) => {
     return (
@@ -15,16 +17,26 @@ const withLoadingComponent = (comp: JSX.Element) => {
 const routes = [
     {
         path: '/',
-        element: <Navigate to="/home"></Navigate>,
+        element: <Navigate to="/login" />,
     },
     {
-        path: '/home',
-        element: withLoadingComponent(<Home />),
+        path: '/login',
+        element: withLoadingComponent(<Login />),
     },
     {
-        path: '/about',
-        element: withLoadingComponent(<About />),
-    }
+        path: '/',
+        element: withLoadingComponent(<Layout/>),
+        children: [
+            {
+                path: 'home',
+                element: withLoadingComponent(<Home />),
+            },
+            {
+                path: 'about',
+                element: withLoadingComponent(<About />),
+            },
+        ]
+    },
 ]
 
 export default routes

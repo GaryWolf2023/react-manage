@@ -44,28 +44,49 @@ const items: MenuItem[] = [
 
 const LbyLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [openKeys, setOpenKeys] = useState(['']);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
   const navigateTo = useNavigate()
 
   const menuClick = (e: {key: string}) => {
-    console.log(e);
+    console.log(e.key);
     navigateTo(e.key)
+  }
+
+  const handleOpenChange = (keys: string[]) => {
+    // 实现手风琴效果----只展开一项
+    setOpenKeys(keys.length > 0 ? [keys[keys.length - 1]] : [])
   }
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+      >
         {/* <div className="demo-logo-vertical">11111</div> */}
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} onClick={menuClick}/>
+        <Menu
+          theme="dark"
+          defaultSelectedKeys={['/home']}
+          mode="inline"
+          triggerSubMenuAction="hover"
+          items={items}
+          onClick={menuClick}
+          openKeys={openKeys}
+          onOpenChange={handleOpenChange}
+        />
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }}>
-          <Breadcrumb style={{ margin: '18px 0 18px 20px' }}>
+          {/* <Breadcrumb style={{ margin: '18px 0 18px 20px' }}>
             <Breadcrumb.Item>User</Breadcrumb.Item>
             <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
+          </Breadcrumb> */}
         </Header>
         <Content style={{ margin: '8px 8px 0' }} className="layout-content-box">
             <Outlet></Outlet>
